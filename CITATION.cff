@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "MaxEnt-Kernel: Non-Markovian Quantum Dynamics Solver with Boltzmann Memory Kernel"
+type: software
+version: 1.0.0
+date-prereleased: 2025-12-28
+date-released: 10-04-2026
+doi: 10.5281/zenodo.19486927
+url: "https://github.com/hopenmind/MaxEnt-Kernel"
+license: "LicenseRef-Proprietary-HopenMind"
+repository-code: "https://github.com/hopenmind/MaxEnt-Kernel"
+authors:
+  - family-names: "DESVAUX"
+    given-names: "G.J.Y."
+    orcid: "https://orcid.org/0009-0008-9813-4627"
+    email: "contact@hopenmind.com"
+    affiliation: "Hope 'n Mind Research"
+keywords:
+  - non-Markovian
+  - quantum dynamics
+  - memory kernel
+  - Boltzmann kernel
+  - MaxEnt
+  - open quantum systems
+  - Lindblad
+  - spectral density
+  - photonic systems
+abstract: >-
+  A Python - exe (windows) solver for non-Markovian quantum dynamics beyond the Lindblad
+  master equation. Computes Boltzmann memory kernels K*(t,s) from spectral
+  densities via the MaxEnt variational principle, solves the generalized
+  integro-differential master equation, and compares with standard Markovian
+  (Lindblad) evolution. Includes a library of photonic spectral densities
+  (Ohmic, Lorentzian, band-edge, waveguide QED, cavity QED) and a PyQt6
+  desktop GUI with standalone executable.
