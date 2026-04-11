@@ -12,7 +12,7 @@ This example uses GENERIC textbook parameters (Drude-Lorentz model),
 not associated with any specific experimental research.
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
-DOI: 10.5281/zenodo.19486927
+DOI: 10.5281/zenodo.19500872
 Contact: contact@hopenmind.com
 """
 

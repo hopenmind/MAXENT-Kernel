@@ -9,7 +9,7 @@ Core class: MemoryKernel
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
 Authors: DESVAUX G.J.Y. 
-DOI: 10.5281/zenodo.19486927 | ORCID: 0009-0008-9813-4627
+DOI: 10.5281/zenodo.19500872 | ORCID: 0009-0008-9813-4627
 License: Proprietary — Scientific license on request with citation.
 Contact: contact@hopenmind.com
 """

@@ -167,7 +167,7 @@ Program/
 ---
 
 **Authors:** DESVAUX G.J.Y. et al.  
-**DOI:** [10.5281/zenodo.19486927](https://doi.org/10.5281/zenodo.19486927)  
+**DOI:** [10.5281/zenodo.19500872](https://doi.org/10.5281/zenodo.19500872)  
 **License:** Proprietary — Scientific license on request with citation  
 **Contact:** contact@hopenmind.com  
 **Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.**

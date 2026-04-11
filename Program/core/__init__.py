@@ -26,7 +26,7 @@ Usage:
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
 Authors: DESVAUX G.J.Y. 
-DOI: 10.5281/zenodo.19486927
+DOI: 10.5281/zenodo.19500872
 ORCID: 0009-0008-9813-4627
 License: Proprietary — Scientific license available on request with citation.
 Contact: contact@hopenmind.com
@@ -45,7 +45,7 @@ __version__ = "1.0.0"
 __author__ = "DESVAUX G.J.Y. et al."
 __copyright__ = "Copyright (c) 2026 Hope 'n Mind SASU - Research"
 __license__ = "Proprietary — Scientific license on request with citation"
-__doi__ = "10.5281/zenodo.19486927"
+__doi__ = "10.5281/zenodo.19500872"
 __contact__ = "contact@hopenmind.com"
 
 __all__ = [

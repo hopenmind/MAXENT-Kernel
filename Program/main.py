@@ -8,7 +8,7 @@ Two modes:
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
 Authors: DESVAUX G.J.Y. 
-DOI: 10.5281/zenodo.19486927
+DOI: 10.5281/zenodo.19500872
 Contact: contact@hopenmind.com
 """
 
@@ -34,12 +34,13 @@ def cli_run():
     if base not in sys.path:
         sys.path.insert(0, base)
     from core import compare, SpectralDensities, MemoryKernel
+    from branding import BrandingConfig
 
     parser = argparse.ArgumentParser(
         prog="MaxEnt-Kernel CLI",
         description=(
             "Non-Markovian vs Lindblad comparison solver.\n"
-            "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19486927"
+            "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19500872"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
@@ -147,6 +148,9 @@ def cli_run():
         source_label = f"Built-in: {sd_name}"
         print(f"Using built-in spectral density: {sd_name}")
 
+    # ── Load branding ──
+    branding = BrandingConfig.load()
+
     # ── Run solver ──
 
     print(f"Parameters: g={args.g}, T={args.T}, ω₀={args.omega0}, "
@@ -178,7 +182,8 @@ def cli_run():
     # Save plot
     if not args.no_plot:
         plot_path = os.path.join(outdir, f"comparison_{timestamp}.png")
-        result.plot(show=False, save=plot_path)
+        result.plot(show=False, save=plot_path, branding=branding,
+                    source_label=source_label)
         print(f"\nPlot saved:    {plot_path}")
 
     # Save CSV
@@ -196,11 +201,15 @@ def cli_run():
     # Save summary
     summary_path = os.path.join(outdir, f"summary_{timestamp}.txt")
     with open(summary_path, 'w', encoding='utf-8') as f:
+        f.write(branding.summary_header())
+        f.write("\n\n")
         f.write(result.summary())
         f.write(f"\n\nSource: {source_label}\n")
         f.write(f"Parameters: g={args.g}, T={args.T}, omega0={args.omega0}, "
                 f"t_max={args.tmax}, dt={args.dt}\n")
         f.write(f"Output dir: {outdir}\n")
+        if branding.footer_text:
+            f.write(f"\n{branding.footer_text}\n")
     print(f"Summary saved: {summary_path}")
 
     print(f"\nAll output files in: {outdir}")

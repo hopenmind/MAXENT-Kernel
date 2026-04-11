@@ -13,7 +13,7 @@ Researchers can:
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
 Authors: DESVAUX G.J.Y. 
-DOI: 10.5281/zenodo.19486927
+DOI: 10.5281/zenodo.19500872
 Contact: contact@hopenmind.com
 """
 
@@ -27,7 +27,8 @@ from PyQt6.QtWidgets import (
     QGroupBox, QLabel, QComboBox, QDoubleSpinBox, QPushButton,
     QTextEdit, QLineEdit, QSplitter, QStatusBar, QMenuBar,
     QFileDialog, QMessageBox, QProgressBar, QGridLayout,
-    QTabWidget, QCheckBox, QSpinBox
+    QTabWidget, QCheckBox, QSpinBox, QDialog, QDialogButtonBox,
+    QFormLayout, QFrame
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QAction, QFont, QIcon
@@ -48,6 +49,7 @@ if _BASE not in sys.path:
 
 from core import compare, SpectralDensities, MemoryKernel
 from core.lindblad import LindbladSolver
+from branding import BrandingConfig
 
 
 # ─────────────────────────────────────────────────────────
@@ -82,20 +84,142 @@ class SimulationWorker(QThread):
 # ─────────────────────────────────────────────────────────
 
 class PlotCanvas(FigureCanvas):
-    """Embedded matplotlib figure."""
+    """
+    Embedded matplotlib figure with right-click export context menu.
+
+    Supported academic export formats:
+      PNG  — 300 dpi, standard for conference proceedings
+      PDF  — vector, for LaTeX / journal submissions
+      SVG  — vector, editable in Inkscape / Illustrator
+      EPS  — PostScript, required by some legacy journals (AIP, APS)
+      TIFF — 600 dpi, required by some biomedical / optics journals
+    """
+
+    # Export format definitions: (label, extension, dpi or None for vector)
+    _EXPORT_FORMATS = [
+        ("PNG  — 300 dpi  (conference / web)",       "png",  300),
+        ("PNG  — 600 dpi  (high-res print)",          "png",  600),
+        ("PDF  — vector   (LaTeX / journals)",        "pdf",  None),
+        ("SVG  — vector   (Inkscape / Illustrator)",  "svg",  None),
+        ("EPS  — vector   (AIP, APS legacy journals)","eps",  None),
+        ("TIFF — 300 dpi  (standard print)",          "tiff", 300),
+        ("TIFF — 600 dpi  (biomedical / optics)",     "tiff", 600),
+    ]
 
     def __init__(self, parent=None, width=10, height=8):
         self.fig = Figure(figsize=(width, height), dpi=100)
         super().__init__(self.fig)
         self.setParent(parent)
+        self._last_export_dir = os.path.expanduser("~")
+        # Enable right-click
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.DefaultContextMenu)
 
-    def plot_result(self, result):
-        self.fig.clear()
-        self.fig.suptitle(
-            "Non-Markovian vs Lindblad Dynamics\n"
-            "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19486927",
-            fontsize=11, fontweight='bold'
+    def contextMenuEvent(self, event):
+        """Right-click menu — only shown when a result has been plotted."""
+        # Check whether the figure has any subplots (i.e. a result exists)
+        if not self.fig.get_axes():
+            return
+
+        from PyQt6.QtWidgets import QMenu
+        menu = QMenu(self)
+        menu.setTitle("Export figure")
+
+        title_act = menu.addAction("Export figure as…")
+        title_act.setEnabled(False)   # visual header, non-clickable
+        menu.addSeparator()
+
+        for label, ext, dpi in self._EXPORT_FORMATS:
+            act = menu.addAction(label)
+            # Capture loop vars in default args
+            act.triggered.connect(
+                lambda checked, e=ext, d=dpi, lbl=label: self._export_as(e, d)
+            )
+
+        menu.exec(event.globalPos())
+
+    def _export_as(self, ext, dpi):
+        """Open save dialog and export figure in the chosen format."""
+        fmt_upper = ext.upper()
+        dpi_str   = f"_{dpi}dpi" if dpi else "_vector"
+        default_name = f"maxent_kernel{dpi_str}.{ext}"
+        default_path = os.path.join(self._last_export_dir, default_name)
+
+        # Build filter string
+        filter_map = {
+            "png":  f"PNG Image (*.png)",
+            "pdf":  f"PDF Document (*.pdf)",
+            "svg":  f"SVG Vector (*.svg)",
+            "eps":  f"EPS PostScript (*.eps)",
+            "tiff": f"TIFF Image (*.tiff *.tif)",
+        }
+        file_filter = filter_map.get(ext, f"{fmt_upper} (*.{ext})")
+
+        path, _ = QFileDialog.getSaveFileName(
+            self, f"Export as {fmt_upper}", default_path, file_filter
         )
+        if not path:
+            return
+
+        self._last_export_dir = os.path.dirname(path)
+
+        try:
+            import matplotlib
+            save_kwargs = {"bbox_inches": "tight", "facecolor": "white"}
+            if dpi:
+                save_kwargs["dpi"] = dpi
+
+            # Embed hidden metadata — filtered per format
+            branding = getattr(self, '_branding', None)
+            if branding is not None:
+                meta = branding.metadata_for_format(ext)
+                if meta is not None:
+                    save_kwargs["metadata"] = meta
+
+            # EPS / PS: force Type 42 fonts (TrueType wrapper) so Inkscape,
+            # Illustrator and ghostscript can handle them without crashing.
+            # Type 3 (matplotlib default) causes Inkscape to close silently.
+            _prev_fonttype = matplotlib.rcParams.get('ps.fonttype', 3)
+            if ext == "eps":
+                matplotlib.rcParams['ps.fonttype'] = 42
+
+            self.fig.savefig(path, **save_kwargs)
+
+            # Restore font type setting
+            if ext == "eps":
+                matplotlib.rcParams['ps.fonttype'] = _prev_fonttype
+
+        except Exception as e:
+            QMessageBox.warning(
+                self, "Export Error",
+                f"Could not save figure:\n{e}"
+            )
+
+    def plot_result(self, result, branding=None, source_label=None):
+        self._branding = branding  # keep ref for context-menu export metadata
+        self.fig.clear()
+
+        # Apply branding (header, source label, footer, optional logo)
+        if branding is not None:
+            _logo_default = os.path.join(os.path.dirname(__file__), 'assets', 'logo.png')
+            if getattr(sys, 'frozen', False):
+                _logo_default = os.path.join(sys._MEIPASS, 'ui', 'assets', 'logo.png')
+            branding.apply_to_figure(
+                self.fig,
+                _default_logo_path=_logo_default,
+                source_label=source_label
+            )
+        else:
+            self.fig.suptitle(
+                "Non-Markovian vs Lindblad Dynamics\n"
+                "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19500872",
+                fontsize=11, fontweight='bold'
+            )
+            if source_label:
+                self.fig.text(
+                    0.01, 0.895, f"J(\u03c9): {source_label}",
+                    ha='left', va='top',
+                    fontsize=7.5, color='#444444', style='italic'
+                )
 
         ax1 = self.fig.add_subplot(221)
         ax1.plot(result.t, result.nm.populations, 'b-', lw=2, label='Non-Markovian')
@@ -140,11 +264,17 @@ class PlotCanvas(FigureCanvas):
                      transform=ax4.transAxes)
         ax4.grid(True, alpha=0.3)
 
-        self.fig.tight_layout(rect=[0, 0, 1, 0.93])
+        self.fig.tight_layout(rect=[0, 0.03, 1, 0.93])
         self.draw()
 
-    def save_figure(self, path):
-        self.fig.savefig(path, dpi=150, bbox_inches='tight')
+    def save_figure(self, path, branding=None):
+        kwargs = {"dpi": 150, "bbox_inches": "tight", "facecolor": "white"}
+        ext = os.path.splitext(path)[1].lower().lstrip(".")
+        if branding is not None:
+            meta = branding.metadata_for_format(ext)
+            if meta is not None:
+                kwargs["metadata"] = meta
+        self.fig.savefig(path, **kwargs)
 
 
 # ─────────────────────────────────────────────────────────
@@ -205,6 +335,149 @@ BUILTIN_SD = {
 
 
 # ─────────────────────────────────────────────────────────
+# Header Settings Dialog
+# ─────────────────────────────────────────────────────────
+
+class HeaderSettingsDialog(QDialog):
+    """
+    Dialog to customize every visible field on plots and summary files.
+
+    Layout (top-to-bottom, mirrors the figure):
+      1. Institute / Group name   — bold, top line
+      2. Subtitle                 — second line (authors, experiment, …)
+      3. Reference field          — third line (DOI, arXiv, grant, …)
+      4. Logo path + Left / Right placement
+      5. Footer text              — centered, small, bottom of figure
+
+    Hope 'n Mind / MaxEnt-Kernel identity is silently embedded in
+    file metadata on every export — not shown on the figure.
+    """
+
+    def __init__(self, branding: BrandingConfig, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Header Settings")
+        self.setMinimumWidth(560)
+        self._branding = branding
+
+        from PyQt6.QtWidgets import QRadioButton, QButtonGroup
+        layout = QVBoxLayout(self)
+
+        # ── Header fields ────────────────────────────────────────────────────
+        header_group = QGroupBox("Figure header  (top of plot)")
+        form = QFormLayout()
+        form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        form.setVerticalSpacing(10)
+
+        self.name_edit = QLineEdit(branding.institute_name)
+        self.name_edit.setPlaceholderText("e.g. Quantum Optics Lab — University of Paris")
+        self.name_edit.setFont(QFont("", 0, QFont.Weight.Bold))
+        form.addRow("Institute / Group name:", self.name_edit)
+
+        self.subtitle_edit = QLineEdit(branding.subtitle)
+        self.subtitle_edit.setPlaceholderText(
+            "e.g. Non-Markovian vs Lindblad Dynamics  or  Author A, Author B"
+        )
+        form.addRow("Subtitle / Authors:", self.subtitle_edit)
+
+        self.ref_edit = QLineEdit(branding.reference)
+        self.ref_edit.setPlaceholderText(
+            "e.g. DOI: 10.5281/zenodo.19500872  or  arXiv:2401.00001"
+        )
+        form.addRow("Reference field:", self.ref_edit)
+
+        header_group.setLayout(form)
+        layout.addWidget(header_group)
+
+        # ── Logo ─────────────────────────────────────────────────────────────
+        logo_group = QGroupBox("Logo")
+        logo_layout = QVBoxLayout()
+
+        logo_path_row = QHBoxLayout()
+        self.logo_edit = QLineEdit(branding.logo_path)
+        self.logo_edit.setPlaceholderText("Leave empty to use the MaxEnt-Kernel logo")
+        logo_browse = QPushButton("Browse…")
+        logo_browse.setMaximumWidth(80)
+        logo_browse.clicked.connect(self._browse_logo)
+        logo_path_row.addWidget(self.logo_edit)
+        logo_path_row.addWidget(logo_browse)
+        logo_layout.addLayout(logo_path_row)
+
+        logo_pos_row = QHBoxLayout()
+        logo_pos_row.addWidget(QLabel("Position:"))
+        self._logo_left  = QRadioButton("Left")
+        self._logo_right = QRadioButton("Right")
+        self._logo_group = QButtonGroup(self)
+        self._logo_group.addButton(self._logo_left,  0)
+        self._logo_group.addButton(self._logo_right, 1)
+        (self._logo_left if branding.logo_position != "right" else self._logo_right).setChecked(True)
+        logo_pos_row.addWidget(self._logo_left)
+        logo_pos_row.addWidget(self._logo_right)
+        logo_pos_row.addStretch()
+        logo_layout.addLayout(logo_pos_row)
+
+        logo_group.setLayout(logo_layout)
+        layout.addWidget(logo_group)
+
+        # ── Footer ───────────────────────────────────────────────────────────
+        footer_group = QGroupBox("Footer  (centered, bottom of figure)")
+        footer_layout = QVBoxLayout()
+        self.footer_edit = QLineEdit(branding.footer_text)
+        self.footer_edit.setPlaceholderText(
+            "e.g. MaxEnt-Kernel solver by Hope 'n Mind SASU - Research"
+        )
+        self.footer_edit.setStyleSheet("color: #555555; font-style: italic;")
+        footer_layout.addWidget(self.footer_edit)
+        footer_group.setLayout(footer_layout)
+        layout.addWidget(footer_group)
+
+        # ── Separator + buttons ──────────────────────────────────────────────
+        sep = QFrame()
+        sep.setFrameShape(QFrame.Shape.HLine)
+        layout.addWidget(sep)
+
+        btn_box = QDialogButtonBox()
+        save_btn   = btn_box.addButton("Save",             QDialogButtonBox.ButtonRole.AcceptRole)
+        reset_btn  = btn_box.addButton("Reset to Default", QDialogButtonBox.ButtonRole.ResetRole)
+        cancel_btn = btn_box.addButton("Cancel",           QDialogButtonBox.ButtonRole.RejectRole)
+
+        save_btn.clicked.connect(self._save)
+        reset_btn.clicked.connect(self._reset)
+        cancel_btn.clicked.connect(self.reject)
+        layout.addWidget(btn_box)
+
+    def _browse_logo(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select Logo Image", "",
+            "Images (*.png *.jpg *.jpeg *.bmp *.gif);;All files (*)"
+        )
+        if path:
+            self.logo_edit.setText(path)
+
+    def _save(self):
+        self._branding.institute_name = self.name_edit.text().strip()
+        self._branding.subtitle       = self.subtitle_edit.text().strip()
+        self._branding.reference      = self.ref_edit.text().strip()
+        self._branding.logo_path      = self.logo_edit.text().strip()
+        self._branding.logo_position  = "right" if self._logo_right.isChecked() else "left"
+        self._branding.footer_text    = self.footer_edit.text().strip()
+        try:
+            self._branding.save()
+        except Exception as e:
+            QMessageBox.warning(self, "Save Error", f"Could not save settings:\n{e}")
+            return
+        self.accept()
+
+    def _reset(self):
+        self._branding.reset_to_defaults()
+        self.name_edit.setText(self._branding.institute_name)
+        self.subtitle_edit.setText(self._branding.subtitle)
+        self.ref_edit.setText(self._branding.reference)
+        self.logo_edit.setText(self._branding.logo_path)
+        self._logo_left.setChecked(True)
+        self.footer_edit.setText(self._branding.footer_text)
+
+
+# ─────────────────────────────────────────────────────────
 # Main Window
 # ─────────────────────────────────────────────────────────
 
@@ -225,6 +498,7 @@ class MainWindow(QMainWindow):
         self.result = None
         self.worker = None
         self.csv_J = None
+        self.branding = BrandingConfig.load()
         self.output_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'Results')
         self.output_dir = os.path.abspath(self.output_dir)
 
@@ -269,6 +543,15 @@ class MainWindow(QMainWindow):
         quit_act.setShortcut("Ctrl+Q")
         quit_act.triggered.connect(self.close)
         file_menu.addAction(quit_act)
+
+        # Edit
+        edit_menu = menubar.addMenu("&Edit")
+
+        header_act = QAction("&Header Settings…", self)
+        header_act.setShortcut("Ctrl+H")
+        header_act.setStatusTip("Customize the institute name, logo and DOI on outputs")
+        header_act.triggered.connect(self._show_header_settings)
+        edit_menu.addAction(header_act)
 
         # Help
         help_menu = menubar.addMenu("&Help")
@@ -533,7 +816,11 @@ class MainWindow(QMainWindow):
 
     def _on_result(self, result):
         self.result = result
-        self.canvas.plot_result(result)
+        self.canvas.plot_result(
+            result,
+            branding=self.branding,
+            source_label=getattr(self, '_current_source_name', None)
+        )
         self.result_text.setPlainText(result.summary())
         self.run_btn.setEnabled(True)
         self.progress.setVisible(False)
@@ -556,11 +843,12 @@ class MainWindow(QMainWindow):
     def _auto_save(self, result):
         """Auto-save plot and CSV to output folder."""
         os.makedirs(self.output_dir, exist_ok=True)
+        self.canvas._last_export_dir = self.output_dir  # keep right-click in sync
         timestamp = time.strftime("%Y%m%d_%H%M%S")
 
-        # Save plot
+        # Save plot (with hidden metadata)
         plot_path = os.path.join(self.output_dir, f"comparison_{timestamp}.png")
-        self.canvas.save_figure(plot_path)
+        self.canvas.save_figure(plot_path, branding=self.branding)
 
         # Save CSV
         csv_path = os.path.join(self.output_dir, f"data_{timestamp}.csv")
@@ -577,12 +865,16 @@ class MainWindow(QMainWindow):
         # Save summary
         summary_path = os.path.join(self.output_dir, f"summary_{timestamp}.txt")
         with open(summary_path, 'w', encoding='utf-8') as f:
+            f.write(self.branding.summary_header())
+            f.write("\n\n")
             f.write(result.summary())
             f.write(f"\n\nSource: {getattr(self, '_current_source_name', 'N/A')}\n")
             f.write(f"Parameters: g={self.spin_g.value()}, T={self.spin_T.value()}, "
                     f"omega0={self.spin_omega0.value()}, t_max={self.spin_tmax.value()}, "
                     f"dt={self.spin_dt.value()}\n")
             f.write(f"\nFiles:\n  Plot: {plot_path}\n  Data: {csv_path}\n")
+            if self.branding.footer_text:
+                f.write(f"\n{self.branding.footer_text}\n")
 
         self.result_text.append(
             f"\n--- Auto-saved to {self.output_dir} ---\n"
@@ -625,7 +917,7 @@ class MainWindow(QMainWindow):
             "PNG (*.png);;PDF (*.pdf);;SVG (*.svg)"
         )
         if path:
-            self.canvas.save_figure(path)
+            self.canvas.save_figure(path, branding=self.branding)
             self.statusBar().showMessage(f"Plot saved: {path}")
 
     def _export_data(self):
@@ -652,9 +944,26 @@ class MainWindow(QMainWindow):
         d = QFileDialog.getExistingDirectory(self, "Select Output Folder", self.output_dir)
         if d:
             self.output_dir = d
+            self.canvas._last_export_dir = d   # keep right-click export in sync
             self.outdir_label.setText(self._short_path(d))
             self.outdir_label.setToolTip(d)
             self.statusBar().showMessage(f"Output folder: {d}")
+
+    def _show_header_settings(self):
+        """Open the Header Settings dialog (Edit menu)."""
+        dlg = HeaderSettingsDialog(self.branding, parent=self)
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            # Branding already mutated and saved inside the dialog.
+            # Re-render the current plot if one exists.
+            if self.result is not None:
+                self.canvas.plot_result(
+                    self.result,
+                    branding=self.branding,
+                    source_label=getattr(self, '_current_source_name', None)
+                )
+            self.statusBar().showMessage(
+                f"Header updated — {self.branding.institute_name}"
+            )
 
     def _show_guide(self):
         QMessageBox.information(
@@ -696,8 +1005,8 @@ class MainWindow(QMainWindow):
             "<p>Non-Markovian Quantum Dynamics Solver<br>"
             "with Boltzmann Memory Kernel</p>"
             "<p><b>Authors:</b> DESVAUX G.J.Y. et al.</p>"
-            "<p><b>DOI:</b> <a href='https://doi.org/10.5281/zenodo.19486927'>"
-            "10.5281/zenodo.19486927</a></p>"
+            "<p><b>DOI:</b> <a href='https://doi.org/10.5281/zenodo.19500872'>"
+            "10.5281/zenodo.19500872</a></p>"
             "<p><b>License:</b> Proprietary — Scientific license on request</p>"
             "<p><b>Contact:</b> contact@hopenmind.com</p>"
             "<hr>"

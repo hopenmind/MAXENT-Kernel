@@ -8,7 +8,7 @@ Provides:
 
 Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.
 Authors: DESVAUX G.J.Y. 
-DOI: 10.5281/zenodo.19486927 | ORCID: 0009-0008-9813-4627
+DOI: 10.5281/zenodo.19500872 | ORCID: 0009-0008-9813-4627
 License: Proprietary — Scientific license on request with citation.
 Contact: contact@hopenmind.com
 """
@@ -56,7 +56,7 @@ class ComparisonResult:
         lines = [
             "=" * 55,
             "  Non-Markovian vs Lindblad — Comparison",
-            "  Hope 'n Mind SASU - Research | DOI: 10.5281/zenodo.19486927",
+            "  Hope 'n Mind SASU - Research | DOI: 10.5281/zenodo.19500872",
             "=" * 55,
             f"  Regime:              {self.regime}",
             f"  Memory parameter P:  {P:.4f}",
@@ -67,9 +67,15 @@ class ComparisonResult:
         ]
         return "\n".join(lines)
 
-    def plot(self, show=True, save=None):
+    def plot(self, show=True, save=None, branding=None, metadata=None, source_label=None):
         """
         Plot comparison: populations, coherences, trace distance, kernel.
+
+        Parameters
+        ----------
+        branding     : BrandingConfig or None
+        metadata     : dict or None   — hidden file metadata (PNG/PDF/SVG)
+        source_label : str or None    — spectral density name shown top-left
         """
         try:
             import matplotlib
@@ -80,11 +86,21 @@ class ComparisonResult:
             return
 
         fig, axes = plt.subplots(2, 2, figsize=(12, 9))
-        fig.suptitle(
-            "Non-Markovian vs Lindblad Dynamics\n"
-            "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19486927",
-            fontsize=13, fontweight='bold'
-        )
+
+        if branding is not None:
+            branding.apply_to_figure(fig, source_label=source_label)
+        else:
+            fig.suptitle(
+                "Non-Markovian vs Lindblad Dynamics\n"
+                "Hope 'n Mind SASU - Research — DOI: 10.5281/zenodo.19500872",
+                fontsize=13, fontweight='bold'
+            )
+            if source_label:
+                fig.text(
+                    0.01, 0.895, f"J(\u03c9): {source_label}",
+                    ha='left', va='top',
+                    fontsize=7.5, color='#444444', style='italic'
+                )
 
         # 1. Excited state population
         ax = axes[0, 0]
@@ -133,10 +149,26 @@ class ComparisonResult:
                     ha='center', va='center', transform=ax.transAxes)
         ax.grid(True, alpha=0.3)
 
-        plt.tight_layout()
+        plt.tight_layout(rect=[0, 0.03, 1, 0.93])
 
         if save:
-            fig.savefig(save, dpi=150, bbox_inches='tight')
+            import os as _os
+            import matplotlib as _mpl
+            _ext = _os.path.splitext(save)[1].lower().lstrip(".")
+            _save_kw = {"dpi": 150, "bbox_inches": "tight", "facecolor": "white"}
+            if branding is not None:
+                _meta = branding.metadata_for_format(_ext)
+                if _meta is not None:
+                    _save_kw["metadata"] = _meta
+            elif metadata:
+                _save_kw["metadata"] = metadata
+            # Force Type 42 fonts for EPS so Inkscape/Illustrator don't crash
+            _prev = _mpl.rcParams.get('ps.fonttype', 3)
+            if _ext == "eps":
+                _mpl.rcParams['ps.fonttype'] = 42
+            fig.savefig(save, **_save_kw)
+            if _ext == "eps":
+                _mpl.rcParams['ps.fonttype'] = _prev
         if show:
             plt.show()
         plt.close(fig)
