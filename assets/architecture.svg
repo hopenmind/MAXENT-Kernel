@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 620" width="820" height="620">
+  <defs>
+    <linearGradient id="ag-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0b1e"/>
+      <stop offset="100%" stop-color="#0e0e28"/>
+    </linearGradient>
+    <filter id="ag-glow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="ag-arr" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#c9a84c" opacity="0.8"/>
+    </marker>
+  </defs>
+  <rect width="820" height="620" rx="14" fill="url(#ag-bg)" stroke="#1e1e3a" stroke-width="1"/>
+
+  <!-- Layer 1: Input -->
+  <rect x="40" y="25" width="740" height="90" rx="10" fill="#0f0f24" stroke="#3d7fff" stroke-width="1" opacity="0.9"/>
+  <text x="60" y="50" fill="#3d7fff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 1 — INPUT</text>
+  <rect x="60" y="60" width="160" height="40" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="140" y="78" text-anchor="middle" fill="#e8e4df" font-family="monospace" font-size="10">Custom Formula</text>
+  <text x="140" y="92" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">Python lambda</text>
+  <rect x="240" y="60" width="160" height="40" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="320" y="78" text-anchor="middle" fill="#e8e4df" font-family="monospace" font-size="10">CSV Data File</text>
+  <text x="320" y="92" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">ω, J(ω) columns</text>
+  <rect x="420" y="60" width="160" height="40" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="500" y="78" text-anchor="middle" fill="#e8e4df" font-family="monospace" font-size="10">Built-in Presets</text>
+  <text x="500" y="92" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">5 spectral densities</text>
+  <rect x="600" y="60" width="160" height="40" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="680" y="78" text-anchor="middle" fill="#e8e4df" font-family="monospace" font-size="10">GUI Input</text>
+  <text x="680" y="92" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">standalone .exe</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="410" y1="115" x2="410" y2="140" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#ag-arr)" opacity="0.6"/>
+  <text x="435" y="132" fill="#5a5670" font-family="sans-serif" font-size="8" font-style="italic">J(ω) → C(τ)</text>
+
+  <!-- Layer 2: Correlation Engine -->
+  <rect x="40" y="145" width="740" height="85" rx="10" fill="#0f0f24" stroke="#00d4ff" stroke-width="1" opacity="0.9"/>
+  <text x="60" y="170" fill="#00d4ff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 2 — CORRELATION ENGINE</text>
+  <rect x="80" y="180" width="660" height="35" rx="6" fill="#141428" stroke="#1a3a5a" stroke-width="0.5"/>
+  <text x="410" y="203" text-anchor="middle" fill="#00d4ff" font-family="Georgia,serif" font-size="15" font-style="italic">C(τ) = g² ∫ J(ω) e^{-i(ω − ω₀)τ} dω</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="410" y1="230" x2="410" y2="255" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#ag-arr)" opacity="0.6"/>
+  <text x="435" y="247" fill="#5a5670" font-family="sans-serif" font-size="8" font-style="italic">MaxEnt principle</text>
+
+  <!-- Layer 3: Kernel Builder -->
+  <rect x="40" y="260" width="740" height="105" rx="10" fill="#0f0f24" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
+  <text x="60" y="285" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 3 — MAXENT KERNEL BUILDER</text>
+  <rect x="60" y="295" width="320" height="55" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="220" y="315" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="11" font-weight="600">Energy Functional</text>
+  <text x="220" y="338" text-anchor="middle" fill="#c9a84c" font-family="monospace" font-size="11">e(t,s) = ∫ₛᵗ |C(τ−s)|² dτ</text>
+  <line x1="395" y1="322" x2="435" y2="322" stroke="#c9a84c" stroke-width="1" marker-end="url(#ag-arr)" opacity="0.5"/>
+  <rect x="445" y="295" width="315" height="55" rx="6" fill="#141428" stroke="#c9a84c33" stroke-width="0.5"/>
+  <text x="602" y="315" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="11" font-weight="600">Boltzmann Distribution</text>
+  <text x="602" y="338" text-anchor="middle" fill="#c9a84c" font-family="monospace" font-size="11">K*(t,s) = exp(−e/T) / Z(t)</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="410" y1="365" x2="410" y2="390" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#ag-arr)" opacity="0.6"/>
+
+  <!-- Layer 4: Dual Solver -->
+  <rect x="40" y="395" width="740" height="95" rx="10" fill="#0f0f24" stroke="#8b5cf6" stroke-width="1" opacity="0.9"/>
+  <text x="60" y="420" fill="#8b5cf6" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 4 — DUAL SOLVER</text>
+  <rect x="60" y="430" width="340" height="45" rx="6" fill="#141428" stroke="#ff3d5a33" stroke-width="0.5"/>
+  <text x="230" y="450" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="11" font-weight="600">Lindblad Solver</text>
+  <text x="230" y="467" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="9">Markov approximation · dρ/dt = −i[H,ρ] + L[ρ]</text>
+  <rect x="420" y="430" width="340" height="45" rx="6" fill="#141428" stroke="#3dff8a33" stroke-width="0.5"/>
+  <text x="590" y="450" text-anchor="middle" fill="#3dff8a" font-family="sans-serif" font-size="11" font-weight="600">MaxEnt-Kernel Solver</text>
+  <text x="590" y="467" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="9">Non-Markovian · dρ/dt = −i[H,ρ] + ∫K·D[ρ]ds</text>
+  <text x="410" y="455" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="16" font-weight="bold">⟷</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="410" y1="490" x2="410" y2="515" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#ag-arr)" opacity="0.6"/>
+
+  <!-- Layer 5: Diagnostic Output -->
+  <rect x="40" y="520" width="740" height="85" rx="10" fill="#0f0f24" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
+  <text x="60" y="545" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 5 — DIAGNOSTIC OUTPUT</text>
+  <rect x="60" y="555" width="210" height="35" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="165" y="572" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Trace Distance D(ρ₁, ρ₂)</text>
+  <text x="165" y="585" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">max deviation metric</text>
+  <rect x="290" y="555" width="210" height="35" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="395" y="572" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Memory Parameter P</text>
+  <text x="395" y="585" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">non-Markovianity</text>
+  <rect x="520" y="555" width="240" height="35" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="640" y="572" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Comparison Plots</text>
+  <text x="640" y="585" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">population · coherence · distance</text>
+</svg>

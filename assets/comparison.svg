@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380">
+  <defs>
+    <linearGradient id="cg-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0b1e"/>
+      <stop offset="100%" stop-color="#0e0e28"/>
+    </linearGradient>
+    <clipPath id="cg-clip-l"><rect x="35" y="55" width="360" height="175"/></clipPath>
+    <clipPath id="cg-clip-r"><rect x="425" y="55" width="360" height="175"/></clipPath>
+  </defs>
+  <rect width="820" height="380" rx="14" fill="url(#cg-bg)" stroke="#1e1e3a" stroke-width="1"/>
+
+  <!-- Left plot: Lindblad -->
+  <rect x="35" y="55" width="360" height="175" rx="8" fill="#0a0a18" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="215" y="45" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="11" font-weight="700" letter-spacing="1">LINDLAD (MARKOVIAN)</text>
+  <!-- Axes -->
+  <line x1="60" y1="60" x2="60" y2="215" stroke="#2a2a4a" stroke-width="0.5"/>
+  <line x1="60" y1="215" x2="380" y2="215" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="50" y="140" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8" transform="rotate(-90,50,140)">ρ₁₁(t)</text>
+  <text x="220" y="228" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">t</text>
+  <!-- Exponential decay curve -->
+  <polyline points="60,70 90,100 120,130 150,155 180,172 210,184 240,192 270,198 300,203 330,207 360,210 380,212"
+    fill="none" stroke="#ff3d5a" stroke-width="2" opacity="0.9" clip-path="url(#cg-clip-l)"/>
+  <!-- Baseline -->
+  <line x1="60" y1="215" x2="380" y2="215" stroke="#ff3d5a" stroke-width="0.3" stroke-dasharray="4,4" opacity="0.3"/>
+  <text x="350" y="225" fill="#5a5670" font-family="sans-serif" font-size="7">exponential decay</text>
+
+  <!-- Right plot: MaxEnt -->
+  <rect x="425" y="55" width="360" height="175" rx="8" fill="#0a0a18" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="605" y="45" text-anchor="middle" fill="#3dff8a" font-family="sans-serif" font-size="11" font-weight="700" letter-spacing="1">MAXENT-KERNEL (NON-MARKOVIAN)</text>
+  <!-- Axes -->
+  <line x1="450" y1="60" x2="450" y2="215" stroke="#2a2a4a" stroke-width="0.5"/>
+  <line x1="450" y1="215" x2="770" y2="215" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="440" y="140" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8" transform="rotate(-90,440,140)">ρ₁₁(t)</text>
+  <text x="610" y="228" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">t</text>
+  <!-- Non-Markovian curve with revival -->
+  <polyline points="450,70 475,95 500,118 525,140 550,158 575,170 600,178 620,175 640,168 660,172 680,178 700,185 720,192 740,198 760,202 770,204"
+    fill="none" stroke="#3dff8a" stroke-width="2" opacity="0.9" clip-path="url(#cg-clip-r)"/>
+  <!-- Revival annotation -->
+  <line x1="620" y1="165" x2="620" y2="175" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="2,2"/>
+  <text x="640" y="163" fill="#c9a84c" font-family="sans-serif" font-size="7">revival</text>
+  <text x="720" y="215" fill="#5a5670" font-family="sans-serif" font-size="7">power-law tail</text>
+
+  <!-- VS badge -->
+  <circle cx="410" cy="145" r="18" fill="#0f0f24" stroke="#c9a84c" stroke-width="1"/>
+  <text x="410" y="149" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700">VS</text>
+
+  <!-- Bottom: Trace Distance -->
+  <rect x="35" y="250" width="750" height="110" rx="8" fill="#0a0a18" stroke="#2a2a4a" stroke-width="0.5"/>
+  <text x="410" y="272" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="11" font-weight="700" letter-spacing="1">TRACE DISTANCE D(ρ_Lindblad, ρ_MaxEnt)</text>
+  <!-- Axes -->
+  <line x1="60" y1="280" x2="60" y2="345" stroke="#2a2a4a" stroke-width="0.5"/>
+  <line x1="60" y1="345" x2="770" y2="345" stroke="#2a2a4a" stroke-width="0.5"/>
+  <!-- Threshold line at 0.01 -->
+  <line x1="60" y1="325" x2="770" y2="325" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+  <text x="775" y="328" fill="#c9a84c" font-family="monospace" font-size="7">0.01</text>
+  <!-- Trace distance curve -->
+  <polyline points="60,345 90,344 120,342 150,338 180,330 210,318 240,308 270,300 300,295 330,292 360,290 390,288 420,286 450,285 480,284 510,283 540,282 570,282 600,283 630,285 660,287 690,290 720,292 750,295 770,296"
+    fill="none" stroke="#ff3d5a" stroke-width="2" opacity="0.8"/>
+  <!-- Danger zone shading -->
+  <rect x="180" y="280" width="500" height="45" rx="0" fill="#ff3d5a" opacity="0.04"/>
+  <text x="410" y="315" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="8" opacity="0.7">Lindblad is wrong here — deviation exceeds 10%</text>
+  <text x="410" y="360" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">t → </text>
+</svg>

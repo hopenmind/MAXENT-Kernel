@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 520" width="620" height="520">
+  <defs>
+    <linearGradient id="dg-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0b1e"/>
+      <stop offset="100%" stop-color="#0e0e28"/>
+    </linearGradient>
+    <marker id="dg-arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#c9a84c" opacity="0.8"/>
+    </marker>
+    <marker id="dg-arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#3dff8a" opacity="0.8"/>
+    </marker>
+    <marker id="dg-arr-r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#ff3d5a" opacity="0.8"/>
+    </marker>
+    <marker id="dg-arr-y" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#c9a84c" opacity="0.8"/>
+    </marker>
+  </defs>
+  <rect width="620" height="520" rx="14" fill="url(#dg-bg)" stroke="#1e1e3a" stroke-width="1"/>
+
+  <!-- Start -->
+  <rect x="195" y="20" width="230" height="42" rx="21" fill="#0f0f24" stroke="#3d7fff" stroke-width="1.5"/>
+  <text x="310" y="46" text-anchor="middle" fill="#3d7fff" font-family="sans-serif" font-size="12" font-weight="600">Measure J(ω)</text>
+
+  <!-- Arrow -->
+  <line x1="310" y1="62" x2="310" y2="85" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#dg-arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="160" y="90" width="300" height="42" rx="8" fill="#0f0f24" stroke="#00d4ff" stroke-width="1"/>
+  <text x="310" y="116" text-anchor="middle" fill="#00d4ff" font-family="sans-serif" font-size="11">Compute C(τ) and K*(t,s)</text>
+
+  <!-- Arrow -->
+  <line x1="310" y1="132" x2="310" y2="155" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#dg-arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="160" y="160" width="300" height="42" rx="8" fill="#0f0f24" stroke="#00d4ff" stroke-width="1"/>
+  <text x="310" y="186" text-anchor="middle" fill="#00d4ff" font-family="sans-serif" font-size="11">Solve Both: Lindblad + MaxEnt-Kernel</text>
+
+  <!-- Arrow -->
+  <line x1="310" y1="202" x2="310" y2="228" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#dg-arr)"/>
+
+  <!-- Decision 1 -->
+  <polygon points="310,230 430,290 310,350 190,290" fill="#0f0f24" stroke="#c9a84c" stroke-width="1.5"/>
+  <text x="310" y="283" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Max Trace</text>
+  <text x="310" y="298" text-anchor="middle" fill="#c9a84c" font-family="monospace" font-size="11">D &lt; 0.01 ?</text>
+
+  <!-- YES branch (left) -->
+  <line x1="190" y1="290" x2="80" y2="290" stroke="#3dff8a" stroke-width="1.5" marker-end="url(#dg-arr-g)"/>
+  <text x="140" y="282" text-anchor="middle" fill="#3dff8a" font-family="sans-serif" font-size="9" font-weight="700">YES</text>
+  <rect x="10" y="265" width="70" height="50" rx="8" fill="#0a1a0f" stroke="#3dff8a" stroke-width="1.5"/>
+  <text x="45" y="287" text-anchor="middle" fill="#3dff8a" font-family="sans-serif" font-size="10" font-weight="600">Lindblad</text>
+  <text x="45" y="303" text-anchor="middle" fill="#3dff8a" font-family="sans-serif" font-size="10" font-weight="600">Valid ✓</text>
+  <text x="45" y="330" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">Stop worrying.</text>
+
+  <!-- NO branch (down) -->
+  <line x1="310" y1="350" x2="310" y2="375" stroke="#ff3d5a" stroke-width="1.5" marker-end="url(#dg-arr-r)"/>
+  <text x="325" y="367" fill="#ff3d5a" font-family="sans-serif" font-size="9" font-weight="700">NO</text>
+
+  <!-- Decision 2 -->
+  <polygon points="310,378 425,428 310,478 195,428" fill="#0f0f24" stroke="#ff3d5a" stroke-width="1.5"/>
+  <text x="310" y="422" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Memory</text>
+  <text x="310" y="438" text-anchor="middle" fill="#c9a84c" font-family="monospace" font-size="11">P &gt; 1 ?</text>
+
+  <!-- YES branch (right) -->
+  <line x1="425" y1="428" x2="510" y2="428" stroke="#ff3d5a" stroke-width="1.5" marker-end="url(#dg-arr-r)"/>
+  <text x="470" y="420" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="9" font-weight="700">YES</text>
+  <rect x="515" y="405" width="95" height="50" rx="8" fill="#1a0a0f" stroke="#ff3d5a" stroke-width="1.5"/>
+  <text x="562" y="425" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="9" font-weight="600">Strongly</text>
+  <text x="562" y="440" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="9" font-weight="600">Non-Markovian</text>
+  <text x="562" y="468" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">Use MaxEnt kernel</text>
+
+  <!-- NO branch (left) -->
+  <line x1="195" y1="428" x2="110" y2="428" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#dg-arr-y)"/>
+  <text x="155" y="420" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="700">NO</text>
+  <rect x="10" y="405" width="100" height="50" rx="8" fill="#1a150a" stroke="#c9a84c" stroke-width="1.5"/>
+  <text x="60" y="425" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="600">Moderately</text>
+  <text x="60" y="440" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="600">Non-Markovian</text>
+  <text x="60" y="468" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8">Verify experimentally</text>
+
+  <!-- Legend box -->
+  <text x="310" y="508" text-anchor="middle" fill="#3a3648" font-family="sans-serif" font-size="8">MaxEnt-Kernel Diagnostic Decision Flowchart</text>
+</svg>

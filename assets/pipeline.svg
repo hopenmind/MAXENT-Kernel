@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 210" width="920" height="210">
+  <defs>
+    <linearGradient id="pg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0b1e"/>
+      <stop offset="100%" stop-color="#12122e"/>
+    </linearGradient>
+    <linearGradient id="pg-arr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#3d7fff"/>
+    </linearGradient>
+    <filter id="pg-glow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="pg-arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#c9a84c"/>
+    </marker>
+  </defs>
+  <rect width="920" height="210" rx="14" fill="url(#pg-bg)" stroke="#1e1e3a" stroke-width="1"/>
+  <!-- Flow line -->
+  <line x1="40" y1="175" x2="880" y2="175" stroke="#1a1a35" stroke-width="1" stroke-dasharray="4,6"/>
+  <circle cx="125" cy="175" r="3.5" fill="#3d7fff" opacity="0.8"/>
+  <circle cx="355" cy="175" r="3.5" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="585" cy="175" r="3.5" fill="#c9a84c" opacity="0.8"/>
+  <circle cx="810" cy="175" r="3.5" fill="#8b5cf6" opacity="0.8"/>
+  <!-- Step labels -->
+  <text x="125" y="42" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.5">INPUT</text>
+  <text x="355" y="42" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.5">STEP 1</text>
+  <text x="585" y="42" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.5">STEP 2</text>
+  <text x="810" y="42" text-anchor="middle" fill="#c9a84c" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.5">OUTPUT</text>
+  <!-- Node 1 -->
+  <rect x="35" y="55" width="180" height="90" rx="12" fill="#0f0f24" stroke="#3d7fff" stroke-width="1.5" filter="url(#pg-glow)"/>
+  <text x="125" y="92" text-anchor="middle" fill="#3d7fff" font-family="Georgia,serif" font-size="22" font-weight="bold">J(ω)</text>
+  <text x="125" y="115" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="11">Spectral Density</text>
+  <text x="125" y="132" text-anchor="middle" fill="#4a4660" font-family="sans-serif" font-size="9">measured · fitted · theoretical</text>
+  <!-- Arrow 1 -->
+  <line x1="220" y1="100" x2="262" y2="100" stroke="url(#pg-arr)" stroke-width="2" marker-end="url(#pg-arrowhead)"/>
+  <text x="241" y="88" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8" font-style="italic">Fourier</text>
+  <!-- Node 2 -->
+  <rect x="265" y="55" width="180" height="90" rx="12" fill="#0f0f24" stroke="#00d4ff" stroke-width="1.5" filter="url(#pg-glow)"/>
+  <text x="355" y="92" text-anchor="middle" fill="#00d4ff" font-family="Georgia,serif" font-size="22" font-weight="bold">C(τ)</text>
+  <text x="355" y="115" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="11">Bath Correlation</text>
+  <text x="355" y="132" text-anchor="middle" fill="#4a4660" font-family="sans-serif" font-size="9">environment memory</text>
+  <!-- Arrow 2 -->
+  <line x1="450" y1="100" x2="492" y2="100" stroke="url(#pg-arr)" stroke-width="2" marker-end="url(#pg-arrowhead)"/>
+  <text x="471" y="88" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8" font-style="italic">MaxEnt</text>
+  <!-- Node 3 -->
+  <rect x="495" y="55" width="180" height="90" rx="12" fill="#0f0f24" stroke="#c9a84c" stroke-width="1.5" filter="url(#pg-glow)"/>
+  <text x="585" y="92" text-anchor="middle" fill="#c9a84c" font-family="Georgia,serif" font-size="22" font-weight="bold">K*(t,s)</text>
+  <text x="585" y="115" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="11">Memory Kernel</text>
+  <text x="585" y="132" text-anchor="middle" fill="#4a4660" font-family="sans-serif" font-size="9">Boltzmann · least-biased</text>
+  <!-- Arrow 3 -->
+  <line x1="680" y1="100" x2="722" y2="100" stroke="url(#pg-arr)" stroke-width="2" marker-end="url(#pg-arrowhead)"/>
+  <text x="701" y="88" text-anchor="middle" fill="#5a5670" font-family="sans-serif" font-size="8" font-style="italic">Integrate</text>
+  <!-- Node 4 -->
+  <rect x="725" y="55" width="170" height="90" rx="12" fill="#0f0f24" stroke="#8b5cf6" stroke-width="1.5" filter="url(#pg-glow)"/>
+  <text x="810" y="92" text-anchor="middle" fill="#8b5cf6" font-family="Georgia,serif" font-size="22" font-weight="bold">ρ(t)</text>
+  <text x="810" y="115" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="11">Density Matrix</text>
+  <text x="810" y="132" text-anchor="middle" fill="#4a4660" font-family="sans-serif" font-size="9">time evolution</text>
+  <!-- Legend -->
+  <text x="460" y="198" text-anchor="middle" fill="#3a3648" font-family="sans-serif" font-size="8">MaxEnt-Kernel Solver Pipeline — from spectral density to quantum dynamics</text>
+</svg>
