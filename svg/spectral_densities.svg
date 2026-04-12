@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" width="780" height="300">
+  <defs>
+    <linearGradient id="bgS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#080c18"/>
+      <stop offset="100%" style="stop-color:#0c1220"/>
+    </linearGradient>
+    <filter id="gS">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="780" height="300" fill="url(#bgS)" rx="10"/>
+
+  <!-- Title -->
+  <text x="390" y="22" text-anchor="middle" font-family="monospace" font-size="11" fill="#4a90d9" letter-spacing="4" opacity="0.8">BUILT-IN SPECTRAL DENSITIES  J(ω)</text>
+
+  <!-- Axis for all plots -->
+  <!-- Plot 1: Ohmic -->
+  <g transform="translate(20,40)">
+    <text x="65" y="12" text-anchor="middle" font-family="monospace" font-size="8" fill="#7fb3e8" opacity="0.9">OHMIC</text>
+    <text x="65" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#4a90d9" opacity="0.6">η ωˢ e^{−ω/ωc}</text>
+    <!-- axes -->
+    <line x1="10" y1="120" x2="120" y2="120" stroke="#4a90d9" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="30" x2="10" y2="120" stroke="#4a90d9" stroke-width="0.8" opacity="0.5"/>
+    <!-- curve: ohmic s=1 -->
+    <path d="M10,120 C20,118 30,105 40,85 C50,65 60,52 70,47 C80,43 90,50 100,63 C110,75 118,90 120,100" stroke="#4a90d9" stroke-width="2" fill="none" filter="url(#gS)" opacity="0.9"/>
+    <text x="65" y="135" text-anchor="middle" font-family="monospace" font-size="7" fill="#4a90d9" opacity="0.4">ω →</text>
+  </g>
+
+  <!-- Plot 2: Lorentzian -->
+  <g transform="translate(165,40)">
+    <text x="65" y="12" text-anchor="middle" font-family="monospace" font-size="8" fill="#c39bd3" opacity="0.9">LORENTZIAN</text>
+    <text x="65" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#9b59b6" opacity="0.6">γ / ((ω−ωc)²+γ²)</text>
+    <line x1="10" y1="120" x2="120" y2="120" stroke="#9b59b6" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="30" x2="10" y2="120" stroke="#9b59b6" stroke-width="0.8" opacity="0.5"/>
+    <!-- Lorentzian peak -->
+    <path d="M10,119 C20,118 35,115 45,110 C52,105 57,90 62,65 C65,45 67,32 70,30 C73,32 75,45 78,65 C83,90 88,105 95,110 C105,115 115,118 120,119" stroke="#9b59b6" stroke-width="2" fill="none" filter="url(#gS)" opacity="0.9"/>
+    <!-- peak line -->
+    <line x1="70" y1="30" x2="70" y2="120" stroke="#9b59b6" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="65" y="135" text-anchor="middle" font-family="monospace" font-size="7" fill="#9b59b6" opacity="0.4">ω →</text>
+  </g>
+
+  <!-- Plot 3: Band edge -->
+  <g transform="translate(310,40)">
+    <text x="65" y="12" text-anchor="middle" font-family="monospace" font-size="8" fill="#82e0aa" opacity="0.9">BAND EDGE</text>
+    <text x="65" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#2ecc71" opacity="0.6">β^{3/2} / √(ω−ωe)</text>
+    <line x1="10" y1="120" x2="120" y2="120" stroke="#2ecc71" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="30" x2="10" y2="120" stroke="#2ecc71" stroke-width="0.8" opacity="0.5"/>
+    <!-- Band edge: diverges at ωe then decays -->
+    <path d="M45,120 C47,115 49,100 52,75 C55,58 59,47 63,42 C68,38 74,40 82,50 C90,60 100,80 110,95 C115,105 118,112 120,118" stroke="#2ecc71" stroke-width="2" fill="none" filter="url(#gS)" opacity="0.9"/>
+    <!-- edge marker -->
+    <line x1="45" y1="30" x2="45" y2="120" stroke="#2ecc71" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="45" y="133" text-anchor="middle" font-family="monospace" font-size="7" fill="#2ecc71" opacity="0.5">ωe</text>
+    <text x="65" y="140" text-anchor="middle" font-family="monospace" font-size="7" fill="#2ecc71" opacity="0.4">ω →</text>
+  </g>
+
+  <!-- Plot 4: Photonic Crystal -->
+  <g transform="translate(455,40)">
+    <text x="65" y="12" text-anchor="middle" font-family="monospace" font-size="8" fill="#f39c12" opacity="0.9">PHOTONIC CRYSTAL</text>
+    <text x="65" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#f39c12" opacity="0.6">band edge + gap</text>
+    <line x1="10" y1="120" x2="120" y2="120" stroke="#f39c12" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="30" x2="10" y2="120" stroke="#f39c12" stroke-width="0.8" opacity="0.5"/>
+    <!-- PhC: gap then band edge -->
+    <path d="M10,119 C15,119 18,118 20,118" stroke="#f39c12" stroke-width="2" fill="none" opacity="0.7"/>
+    <!-- gap -->
+    <rect x="20" y="30" width="35" height="89" fill="#0a0d18" opacity="0.8"/>
+    <line x1="20" y1="30" x2="20" y2="120" stroke="#f39c12" stroke-width="0.5" stroke-dasharray="2,3" opacity="0.4"/>
+    <line x1="55" y1="30" x2="55" y2="120" stroke="#f39c12" stroke-width="0.5" stroke-dasharray="2,3" opacity="0.4"/>
+    <text x="37" y="78" text-anchor="middle" font-family="monospace" font-size="7" fill="#f39c12" opacity="0.5">gap</text>
+    <path d="M55,120 C57,115 59,100 62,75 C66,55 71,42 76,40 C82,38 89,50 98,65 C107,80 115,100 120,112" stroke="#f39c12" stroke-width="2" fill="none" filter="url(#gS)" opacity="0.9"/>
+    <text x="65" y="140" text-anchor="middle" font-family="monospace" font-size="7" fill="#f39c12" opacity="0.4">ω →</text>
+  </g>
+
+  <!-- Plot 5: Waveguide -->
+  <g transform="translate(600,40)">
+    <text x="75" y="12" text-anchor="middle" font-family="monospace" font-size="8" fill="#e74c3c" opacity="0.9">WAVEGUIDE QED</text>
+    <text x="75" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#e74c3c" opacity="0.6">periodic peaks</text>
+    <line x1="10" y1="120" x2="155" y2="120" stroke="#e74c3c" stroke-width="0.8" opacity="0.5"/>
+    <line x1="10" y1="30" x2="10" y2="120" stroke="#e74c3c" stroke-width="0.8" opacity="0.5"/>
+    <!-- Waveguide: comb of Lorentzian peaks -->
+    <path d="M10,119 C13,119 16,118 19,118 C21,118 23,112 25,98 C27,80 28,65 30,55 C32,45 33,40 35,40 C37,40 38,45 40,55 C42,68 43,90 45,108 C47,116 49,118 52,118 C55,118 57,115 59,102 C61,85 62,70 64,60 C66,50 67,44 69,44 C71,44 72,50 74,62 C76,76 77,96 79,110 C81,117 83,119 86,119 C89,119 91,117 93,106 C95,90 97,78 99,68 C101,58 103,52 105,52 C107,52 108,58 110,68 C112,80 114,98 116,110 C118,118 120,119 130,119" stroke="#e74c3c" stroke-width="2" fill="none" filter="url(#gS)" opacity="0.9"/>
+    <text x="75" y="140" text-anchor="middle" font-family="monospace" font-size="7" fill="#e74c3c" opacity="0.4">ω →</text>
+  </g>
+
+  <!-- Bottom label -->
+  <text x="390" y="292" text-anchor="middle" font-family="monospace" font-size="8" fill="#4a90d9" opacity="0.3">J(ω) determines bath memory — plug in yours or use built-ins</text>
+</svg>
