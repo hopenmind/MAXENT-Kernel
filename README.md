@@ -1,7 +1,7 @@
 <!-- ╔══════════════════════════════════════════════════════════════╗
-     ║   MaxEnt-Kernel — Non-Markovian Quantum Dynamics Solver    ║
-     ║   Boltzmann Memory Kernel via Maximum Entropy Principle    ║
-     ║   DESVAUX G.J.Y. (2008–2026) · Hope 'n Mind Research     ║
+     ║   MaxEnt-Kernel — Non-Markovian Quantum Dynamics Solver      ║
+     ║   Boltzmann Memory Kernel via Maximum Entropy Principle      ║
+     ║   DESVAUX G.J.Y. (2006–2026) · Hope 'n Mind Research         ║
      ╚══════════════════════════════════════════════════════════════╝ -->
 
 <div align="center">
@@ -136,34 +136,6 @@ The solver interpolates linearly between your data points.
 | Memory kernel shape | Power-law tail | Memory from band edge |
 | Memory kernel shape | Oscillatory revivals | Memory from waveguide modes |
 
----
-
-## 🐍 Use Your Own J(ω) in Python
-
-```python
-import numpy as np
-from Program.core import MemoryKernel
-from Program.core.lindblad import LindbladSolver
-
-# YOUR measured spectral density
-J = lambda w: 0.1 * w**3 * np.exp(-w / 10)
-
-# Build memory kernel
-K = MemoryKernel.from_spectral_density(J, g=0.1, T=0.05, omega0=5.0)
-
-# Solve non-Markovian dynamics
-rho0 = np.array([0, 0, 1])  # excited state
-nm = K.solve(rho0, np.linspace(0, 50, 200))
-
-# Compare with Lindblad
-L = LindbladSolver.from_spectral_density(J, g=0.1, omega0=5.0)
-m = L.solve(rho0, np.linspace(0, 50, 200))
-
-print(f"Max deviation: {np.max(nm.trace_distance_from(m)):.4f}")
-print(f"Non-Markovianity P = {K.non_markovianity():.4f}")
-```
-
----
 
 ## ⚠️ Known Limitations
 
@@ -185,7 +157,7 @@ This solver is a theoretical diagnostic tool. It predicts what non-Markovian dyn
 
 <div align="center">
 
-**DESVAUX G.J.Y.** (2008–2026). *MaxEnt-Kernel: Non-Markovian Quantum Dynamics Solver with Boltzmann Memory Kernel.*
+**DESVAUX G.J.Y.** (2006–2026). *MaxEnt-Kernel: Non-Markovian Quantum Dynamics Solver with Boltzmann Memory Kernel.*
 
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19486927-c9a84c?style=flat-square&logo=doi&logoColor=white)](https://doi.org/10.5281/zenodo.19486927)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--9813--4627-a6794e?style=flat-square&logo=orcid&logoColor=white)](https://orcid.org/0009-0008-9813-4627)
@@ -196,7 +168,7 @@ This solver is a theoretical diagnostic tool. It predicts what non-Markovian dyn
 
 ## 📜 License
 
-**Proprietary** — Copyright © 2008–2026 Hope 'n Mind Research. All rights reserved.
+**Proprietary** — Copyright © 2006–2026 Hope 'n Mind Research. All rights reserved.
 
 **Scientific Free License** — Copyright © 2024–2026 Hope 'n Mind Research. All rights reserved.
 
