@@ -65,25 +65,6 @@ If the trace distance between the two solutions stays below **1%**, Lindblad is 
 
 **It's a diagnostic tool.** Not a replacement for full theory, but a detector that says *"here, Lindblad lies"* — and shows you what the truth looks like.
 
----
-
-## 📐 Theory in 3 Equations
-
-### Equation 1 — Generalized Master Equation with Memory
-
-$$\frac{d\rho}{dt} = -i[H,\, \rho(t)] + \int_0^t K(t,s)\,\mathcal{D}[\rho(s)]\,ds$$
-
-### Equation 2 — Boltzmann Kernel (derived from MaxEnt, not postulated)
-
-$$K^*(t,s) = \frac{1}{Z(t)} \exp\!\left(-\frac{e(t,s)}{T}\right), \quad e(t,s) = \int_s^t |C(\tau-s)|^2\, d\tau$$
-
-### Equation 3 — Bath Correlation from Spectral Density
-
-$$C(\tau) = g^2 \int_0^\infty J(\omega)\, e^{-i(\omega - \omega_0)\tau}\, d\omega$$
-
-**That's it.** Input J(ω) → get K*(t,s) → solve dynamics.
-
----
 
 ## 🏗️ Architecture
 
