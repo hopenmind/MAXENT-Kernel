@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 24" width="600" height="24" role="img" aria-label="">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E3C56B" stop-opacity="0"/><stop offset="0.25" stop-color="#E3C56B" stop-opacity="0.9"/><stop offset="0.5" stop-color="#C9A84C"/><stop offset="0.75" stop-color="#E3C56B" stop-opacity="0.9"/><stop offset="1" stop-color="#E3C56B" stop-opacity="0"/></linearGradient><filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.4"/></filter></defs>
+  <path d="M8 12 C 80 2 152 22 224 12 S 368 2 440 12 S 584 22 592 12" fill="none" stroke="url(#g)" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M8 12 C 80 2 152 22 224 12 S 368 2 440 12 S 584 22 592 12" fill="none" stroke="#FF3D5A" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="26 900" filter="url(#glow)"><animate attributeName="stroke-dashoffset" values="0;-926" dur="3.6s" repeatCount="indefinite"/></path>
+</svg>

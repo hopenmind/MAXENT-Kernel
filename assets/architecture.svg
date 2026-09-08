@@ -17,7 +17,7 @@
 
   <!-- Layer 1: Input -->
   <rect x="40" y="25" width="740" height="90" rx="10" fill="#0f0f24" stroke="#3d7fff" stroke-width="1" opacity="0.9"/>
-  <text x="60" y="50" fill="#3d7fff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 1 — INPUT</text>
+  <text x="60" y="50" fill="#3d7fff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 1 - INPUT</text>
   <rect x="60" y="60" width="160" height="40" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
   <text x="140" y="78" text-anchor="middle" fill="#e8e4df" font-family="monospace" font-size="10">Custom Formula</text>
   <text x="140" y="92" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">Python lambda</text>
@@ -37,7 +37,7 @@
 
   <!-- Layer 2: Correlation Engine -->
   <rect x="40" y="145" width="740" height="85" rx="10" fill="#0f0f24" stroke="#00d4ff" stroke-width="1" opacity="0.9"/>
-  <text x="60" y="170" fill="#00d4ff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 2 — CORRELATION ENGINE</text>
+  <text x="60" y="170" fill="#00d4ff" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 2 - CORRELATION ENGINE</text>
   <rect x="80" y="180" width="660" height="35" rx="6" fill="#141428" stroke="#1a3a5a" stroke-width="0.5"/>
   <text x="410" y="203" text-anchor="middle" fill="#00d4ff" font-family="Georgia,serif" font-size="15" font-style="italic">C(τ) = g² ∫ J(ω) e^{-i(ω − ω₀)τ} dω</text>
 
@@ -47,7 +47,7 @@
 
   <!-- Layer 3: Kernel Builder -->
   <rect x="40" y="260" width="740" height="105" rx="10" fill="#0f0f24" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
-  <text x="60" y="285" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 3 — MAXENT KERNEL BUILDER</text>
+  <text x="60" y="285" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 3 - MAXENT KERNEL BUILDER</text>
   <rect x="60" y="295" width="320" height="55" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
   <text x="220" y="315" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="11" font-weight="600">Energy Functional</text>
   <text x="220" y="338" text-anchor="middle" fill="#c9a84c" font-family="monospace" font-size="11">e(t,s) = ∫ₛᵗ |C(τ−s)|² dτ</text>
@@ -61,7 +61,7 @@
 
   <!-- Layer 4: Dual Solver -->
   <rect x="40" y="395" width="740" height="95" rx="10" fill="#0f0f24" stroke="#8b5cf6" stroke-width="1" opacity="0.9"/>
-  <text x="60" y="420" fill="#8b5cf6" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 4 — DUAL SOLVER</text>
+  <text x="60" y="420" fill="#8b5cf6" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 4 - DUAL SOLVER</text>
   <rect x="60" y="430" width="340" height="45" rx="6" fill="#141428" stroke="#ff3d5a33" stroke-width="0.5"/>
   <text x="230" y="450" text-anchor="middle" fill="#ff3d5a" font-family="sans-serif" font-size="11" font-weight="600">Lindblad Solver</text>
   <text x="230" y="467" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="9">Markov approximation · dρ/dt = −i[H,ρ] + L[ρ]</text>
@@ -75,7 +75,7 @@
 
   <!-- Layer 5: Diagnostic Output -->
   <rect x="40" y="520" width="740" height="85" rx="10" fill="#0f0f24" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
-  <text x="60" y="545" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 5 — DIAGNOSTIC OUTPUT</text>
+  <text x="60" y="545" fill="#c9a84c" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">LAYER 5 - DIAGNOSTIC OUTPUT</text>
   <rect x="60" y="555" width="210" height="35" rx="6" fill="#141428" stroke="#2a2a4a" stroke-width="0.5"/>
   <text x="165" y="572" text-anchor="middle" fill="#e8e4df" font-family="sans-serif" font-size="10">Trace Distance D(ρ₁, ρ₂)</text>
   <text x="165" y="585" text-anchor="middle" fill="#6a6680" font-family="sans-serif" font-size="8">max deviation metric</text>
