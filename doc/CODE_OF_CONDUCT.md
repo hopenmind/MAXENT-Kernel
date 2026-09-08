@@ -25,4 +25,4 @@ Violations of this code (plagiarism, unauthorized redistribution, abusive commun
 ---
 
 **Contact:** contact@hopenmind.com  
-**Copyright (c) 2008-2026 Hope 'n Mind SASU - Research — All rights reserved.**
+**Copyright (c) 2008-2026 Hope 'n Mind SASU - Research - All rights reserved.**
